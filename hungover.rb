@@ -1,7 +1,7 @@
 @inventory = []
 
 def prompt ()
-  print "Are you going to Stand Up or are you going to lazily Look Around first?"
+  print "What is your sorry ass gonna do next?"
 end
 
 def start
