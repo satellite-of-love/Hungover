@@ -3,6 +3,11 @@
 def prompt ()
   print "Enter command ==>"
 end
+def inventory()
+  puts "You have the follow items:"
+  puts @inventory
+end
+
 
 def start
   puts "Your head is pounding and what feels like the light of ten thousand suns is assaulting your brain directly through your eyes."
@@ -14,16 +19,14 @@ end
 def bed_room 
   puts "The memory of all that tequila turns your stomach and you quickly focus your attention back to the present. The clock on the wall informs you that it’s already 1 p.m. so it’s probably time to drag your sorry ass out of bed and get on with your day."
   prompt; next_move = gets.chomp
-    
-  if next_move == "Stand up"
+  if next_move == "stand up"
     puts "Whoah there, cowgirl. Don't know if you're ready to be entirely vertical just yet."
     prompt; next_move = get.chomp
-  end
-  if next_move == "Look around"
+  elsif next_move == "Look around"
     puts "You’re in your bedroom, sprawled on top of your comforter and pillows. There’s a poster up on the wall of the Star Trek captains and Picard seems to have a distinct look of disapproval on his face as he gazes down at your rather undignified state. Whatever, Jean-Luc, no need to be so snooty about it."
     puts "Next to the bed is a table. On top of the table is a bottle of water. The table also has a drawer, currently closed. The door leading out of the bedroom is to your left."
+    prompt; next_move = gets.chomp
   end 
-  prompt; next_move = gets.chomp
   if next_move == "take water" 
     puts "You gulp down the water until the bottle is empty, and say a brief word of thanks to Drunk-you for so helpfully placing it there before passing out last night. Great job, Drunk-you!"
   elsif next_move == "open drawer"
@@ -48,6 +51,11 @@ def drawer_sequence
     @inventory << "weed"
     prompt; next_move = gets.chomp
     if next_move == "go left"
+      bedroom_doorway()
+    elsif next_move == "look around"
+      puts "Yup, still in your bedroom. It's sort of messy but you like to think the clutter just adds to your overall aesthetic. That's a thing, right? The door leading out of your bedroom is to your left."
+      prompt; next_move = gets.chomp
+      if next_move == "go left"
       bedroom_dooryway()
     end
   end
