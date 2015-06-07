@@ -12,6 +12,7 @@ def start
   puts ''
   puts "The night before had started as just a few drinks out with friends, but had"
   puts "quickly professed to a somewhat rowdier evening."
+  puts ''
   puts "As you lay there in bed some of the details start trickling back..."
   puts ''
   puts "There had definitely been shots at some point..."
