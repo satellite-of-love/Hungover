@@ -1,8 +1,7 @@
 @options = []
 class Kitties
-  attr_reader :command, :prints, :leaves
-  def initialize (c, p, e)
-    @command = c
+  attr_reader :prints, :leaves
+  def initialize (p, e)
     @prints = p
     @leaves = e
   end
@@ -11,12 +10,13 @@ class Kitties
   end
 end
 
-@options = [Kitties.new("loki", "you are fat", false),
-  Kitties.new("grim", "you are fluffy", true)]
+@options =  {"loki" => Kitties.new("you are fat", false),
+ "grim" => Kitties.new("you are fluffy", true)
+}
 
 while true
   next_move = gets.chomp
-  kitty = @options.select{|k| k.command == next_move}.first
+  kitty = @options[next_move]
   puts kitty.prints
   if kitty.leaves 
     exit
