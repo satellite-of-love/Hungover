@@ -1,4 +1,4 @@
-@options = [] # TODO This can go away because you are reassigning it below
+
 
 def prompt
   print "holla at me bro "
@@ -10,10 +10,6 @@ class Kitties
     @prints = p
     @leaves = e
     @moar = m
-  end
-
-  def to_s
-    "meow meow" +@command #TODO: @command will be nil here
   end
 end
 
@@ -36,9 +32,10 @@ def go(options)
   end
 end
 
-@options =  {"loki" => Kitties.new("you are fat", false, {"scratch" => Kitties.new("stop it your fucker"), "snuggle" => Kitties.new("who's my lil man")}),
+@options =  {"loki" => Kitties.new("you are fat", false, {"scratch" => Kitties.new("stop it you fucker"), "snuggle" => Kitties.new("who's my lil man")}),
  "grim" => Kitties.new("you are fluffy", true)
 }
+puts @options
 
 go(@options)
 
