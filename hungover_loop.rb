@@ -1,6 +1,6 @@
-@options = []
+@options = [] # TODO This can go away because you are reassigning it below
 
-def prompt ()
+def prompt
   print "holla at me bro "
 end
 
@@ -10,26 +10,22 @@ class Kitties
     @prints = p
     @leaves = e
     @moar = m
-    
   end
+
   def to_s
-    "meow meow" +@command
+    "meow meow" +@command #TODO: @command will be nil here
   end
 end
 
-@options =  {"loki" => Kitties.new("you are fat", false, {"scratch" => Kitties.new("stop it your fucker"), "snuggle" => Kitties.new("who's my lil man")}),
- "grim" => Kitties.new("you are fluffy", true)
-}
-
 def go(options)
-  prompt()
+  prompt
   next_move = gets.chomp
   kitty = options[next_move]
- 
+
   if  kitty
     puts kitty.prints
-    
-    if  kitty.leaves 
+
+    if  kitty.leaves
       exit
     end
     go(options.merge kitty.moar)
@@ -37,8 +33,12 @@ def go(options)
   else
     puts "holla one more time"
     go(options)
-  
   end
 end
+
+@options =  {"loki" => Kitties.new("you are fat", false, {"scratch" => Kitties.new("stop it your fucker"), "snuggle" => Kitties.new("who's my lil man")}),
+ "grim" => Kitties.new("you are fluffy", true)
+}
+
 go(@options)
 
