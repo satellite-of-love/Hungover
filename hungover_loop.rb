@@ -6,6 +6,8 @@ end
 
 class Kitties
   attr_reader :prints, :leaves, :moar
+  #property or field: what is inside of each object of type Kitties
+  #syntax sugar: makes something easier for you to type
   def initialize (p, e = false, m = {})
     @prints = p
     @leaves = e
@@ -21,10 +23,10 @@ def go(options)
   if  kitty
     puts kitty.prints
 
-    if  kitty.leaves
-      exit
+    if !kitty.leaves
+      go(options.merge kitty.moar)
     end
-    go(options.merge kitty.moar)
+    
 
   else
     puts "holla one more time"
