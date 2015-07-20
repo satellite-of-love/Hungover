@@ -32,9 +32,7 @@ def start
 end
     
 def bed_room 
-  puts "The memory of all that tequila turns your stomach and you quickly focus your"
-  puts "attention back to the present. The clock on the wall informs you that it\'s"
-  puts "already 1 p.m. so it\'s probably time to drag your sorry ass out of bed and get on with your day."
+  
   prompt; next_move = gets.chomp
   if next_move == "stand up"
     puts "Whoah there, cowgirl. Don't know if you're ready to be entirely vertical just yet."
