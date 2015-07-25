@@ -57,13 +57,22 @@ end
               false, 
               { "take water" => Kitties.new("You gulp down the water until the bottle is empty, and say a brief word of thanks to Drunk-you for so helpfully placing it there before passing out last night. Great job, Drunk-you!",
                                             false, 
-                                            {"stand up" => Kitties.new("Congratulations! You're vertical now. Good job buddy.", false) 
-
+                                            {"stand up" => Kitties.new("Congratulations! You're vertical now. Good job buddy.", false, 
+                                              {"leave room" => Kitties.new(<<-EOS
+You slowly manuver yourself forward, offering a brief prayer to any booze-friendly deity that might take pity on your current state. 
+('Are you there, Bacchus? It's me, Margaret'). 
+You slowly make your way to the door, open it, and lean against the frame while you contemplate your next move. 
+Directly ahead is the living room, to your right is the kitchen.
+EOS
+) }) 
                                               }), 
                 "open drawer" => Kitties.new("You open the bedside table drawer. Inside is your phone, your vibrator, and a small bag of weed. Nice.", false, @drawer_options)}),
   "fuck it" => Kitties.new("crawl back into bed you loser", true),
   "stand up" => Kitties.new("Whoah there, cowgirl. Don't know if you're ready to be entirely vertical just yet.", false)
+
 }
+
+
 
 
 def start
