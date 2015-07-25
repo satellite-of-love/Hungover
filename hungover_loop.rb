@@ -32,7 +32,7 @@ def go(options, inventory = [] )
     
 
   else
-    if next_move = "think"
+    if next_move == "think"
       puts "what are some of my options?" 
       puts options.keys.join(", ")
     else
@@ -45,20 +45,26 @@ end
 @drawer_options = { 
   "take vibrator" => Kitties.new("Eh, you’re not really in the mood at the moment.", false),
   "take phone"    => Kitties.new("You pick up your phone. Ten Facebook notifications?! Okay, which one of your asshole friends thought it was okay to tag you in so many horribly unflattering pictures? You quickly untag yourself and send your friend a series of angry emojis to express your displeasure. You place the phone back in the drawer.", false),
-  "take weed"     => Kitties.new("Yass queen, now the morning is really coming together! Weed is great for a hangover. Sadly, there’s nothing in this room to smoke it with. You’re currently pants-less (no pockets) but you didn’t bother to taking off your sports bra last night so you stuff the baggie in there for safekeeping. Classy.", false, {}, [:weed])
-  
-    
-  
+  "take weed"     => Kitties.new("Yass queen, now the morning is really coming together! Weed is great for a hangover. Sadly, there’s nothing in this room to smoke it with. You’re currently pants-less (no pockets) but you didn’t bother to taking off your sports bra last night so you stuff the baggie in there for safekeeping. Classy.", false, 
+    {}, 
+    [:weed])  
 }
 
 
-@starting_options = { "look around" => Kitties.new("You’re in your bedroom, sprawled on top of your comforter and pillows. There’s a poster up on the wall of the Star Trek captains and Picard seems to have a distinct look of disapproval on his face as he gazes down at your rather undignified state. Whatever, Jean-Luc, no need to be so snooty about it. \n Next to the bed is a table. On top of the table is a bottle of water. The table also has a drawer, currently closed. The door leading out of the bedroom is to your left.", false, 
-                   { "take water" => Kitties.new("You gulp down the water until the bottle is empty, and say a brief word of thanks to Drunk-you for so helpfully placing it there before passing out last night. Great job, Drunk-you!"), 
-                     "open drawer" => Kitties.new("You open the bedside table drawer. Inside is your phone, your vibrator, and a small bag of weed. Nice.", false, @drawer_options)}),
-              "fuck it" => Kitties.new("crawl back into bed you loser", true),
-              "stand up" => Kitties.new("Whoah there, cowgirl. Don't know if you're ready to be entirely vertical just yet.", false)
-            }
-puts @starting_options
+@starting_options = 
+{ "look around" => 
+  Kitties.new("You’re in your bedroom, sprawled on top of your comforter and pillows. There’s a poster up on the wall of the Star Trek captains and Picard seems to have a distinct look of disapproval on his face as he gazes down at your rather undignified state. Whatever, Jean-Luc, no need to be so snooty about it. \n Next to the bed is a table. On top of the table is a bottle of water. The table also has a drawer, currently closed. The door leading out of the bedroom is to your left.",
+              false, 
+              { "take water" => Kitties.new("You gulp down the water until the bottle is empty, and say a brief word of thanks to Drunk-you for so helpfully placing it there before passing out last night. Great job, Drunk-you!",
+                                            false, 
+                                            {"stand up" => Kitties.new("Congratulations! You're vertical now. Good job buddy.", false) 
+
+                                              }), 
+                "open drawer" => Kitties.new("You open the bedside table drawer. Inside is your phone, your vibrator, and a small bag of weed. Nice.", false, @drawer_options)}),
+  "fuck it" => Kitties.new("crawl back into bed you loser", true),
+  "stand up" => Kitties.new("Whoah there, cowgirl. Don't know if you're ready to be entirely vertical just yet.", false)
+}
+
 
 def start
   puts "Your head is pounding and what feels like the light of ten thousand suns"
