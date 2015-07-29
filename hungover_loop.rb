@@ -7,11 +7,14 @@ end
 class Kitties
   attr_reader :prints, :leaves, :moar, :new_stuff
   def stuff(inventory)
+    inventory + @new_stuff
   end
   #property or field: what is inside of each object of type Kitties
   #syntax sugar: makes something easier for you to type
+  #statements: only DO something, like an assignment or puts
+  #expression: returns a value
   def initialize (p, e = false, m = {}, s = [])
-    @prints = p
+    @prints = if p.is_a? String then ->(inventory) {p} else p end
     @leaves = e
     @moar = m
     @new_stuff = s
@@ -20,11 +23,11 @@ end
 
 def go(options, inventory = [] )
   prompt
-  next_move = gets.chomp
+  next_move = gets.chomp.strip
   kitty = options[next_move]
 
   if  kitty
-    puts kitty.prints
+    puts kitty.prints.call(inventory)
 
     if !kitty.leaves
       go(options.merge(kitty.moar), kitty.stuff(inventory))
@@ -50,6 +53,11 @@ end
     [:weed])  
 }
 
+print_inventory = ->(inventory) do 
+    if inventory.empty? then "you ain't got nothing" 
+    else "you have something:   " +inventory.join(", ") 
+    end
+  end
 
 @starting_options = 
 { "look around" => 
@@ -65,9 +73,10 @@ You slowly make your way to the door, open it, and lean against the frame while 
 Directly ahead is the living room, to your right is the kitchen.
 EOS
 ) }) 
-                                              }), 
+               }), 
                 "open drawer" => Kitties.new("You open the bedside table drawer. Inside is your phone, your vibrator, and a small bag of weed. Nice.", false, @drawer_options)}),
   "fuck it" => Kitties.new("crawl back into bed you loser", true),
+  "inventory" => Kitties.new(print_inventory),
   "stand up" => Kitties.new("Whoah there, cowgirl. Don't know if you're ready to be entirely vertical just yet.", false)
 
 }
