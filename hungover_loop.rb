@@ -30,15 +30,16 @@ print_inventory = ->(inventory) do
 @starting_options = 
 { "look around" => 
   Kitties.new("You’re in your bedroom, sprawled on top of your comforter and pillows. There’s a poster up on the wall of the Star Trek captains and Picard seems to have a distinct look of disapproval on his face as he gazes down at your rather undignified state. Whatever, Jean-Luc, no need to be so snooty about it. \n Next to the bed is a table. On top of the table is a bottle of water. The table also has a drawer, currently closed. The door leading out of the bedroom is to your left.",
-              false, 
-              { "take water" => Kitties.new("You gulp down the water until the bottle is empty, and say a brief word of thanks to Drunk-you for so helpfully placing it there before passing out last night. Great job, Drunk-you!",
-                                            false, 
-                                            {"stand up" => Kitties.new("Congratulations! You're vertical now. Good job buddy.", false, 
-                                              {"leave room" => 
-@leave_room
-                                                
-                                                }) 
-               }), 
+              false,
+              {
+                
+              "take water" => 
+                Dozer.new("You gulp down the water until the bottle is empty, and say a brief word of thanks to Drunk-you for so helpfully placing it there before passing out last night. Great job, Drunk-you!"
+                ).add_options({"stand up" => Kitties.new("Congratulations! You're vertical now. Good job buddy.", false, {"leave room" => @leave_room })}).
+                only_once.build,
+                
+                
+                
                 "open drawer" => Kitties.new("You open the bedside table drawer. Inside is your phone, your vibrator, and a small bag of weed. Nice.", false, @drawer_options)}),
   "fuck it" => Kitties.new("crawl back into bed you loser", :quit),
   "inventory" => Kitties.new(print_inventory),

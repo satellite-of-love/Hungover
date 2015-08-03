@@ -13,6 +13,23 @@ class Kitties
   end
 end
 
+class Dozer
+  def initialize (p)
+    @prints = p
+  end
+  def add_options (m)
+    @moar = m
+    self 
+  end
+  def only_once 
+    @only_once = true
+    self 
+  end
+  def build 
+    Kitties.new(@prints, :stay_here, @moar)
+  end
+end
+
 
 module Game
   def self.prompt
