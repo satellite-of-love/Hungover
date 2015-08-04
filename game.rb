@@ -19,7 +19,8 @@ class Dozer
     @prints = p
     @travelling = :stay_here
     @moar = {}
-    @once_once = false
+    @new_stuff = []
+    @only_once = false
   end
   def add_options (m)
     @moar = m
@@ -34,8 +35,12 @@ class Dozer
     self
   end
   def build 
-    Kitties.new(@prints, @travelling, @moar, [], @only_once)
+    Kitties.new(@prints, @travelling, @moar, @new_stuff, @only_once)
   end  
+  def you_get (n)
+    @new_stuff = [n]
+    self
+  end
 end
 
 

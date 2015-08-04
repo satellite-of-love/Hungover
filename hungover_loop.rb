@@ -5,9 +5,11 @@ require './game.rb'
 @drawer_options = { 
   "take vibrator" => Kitties.new("Eh, you’re not really in the mood at the moment.", false),
   "take phone"    => Kitties.new("You pick up your phone. Ten Facebook notifications?! Okay, which one of your asshole friends thought it was okay to tag you in so many horribly unflattering pictures? You quickly untag yourself and send your friend a series of angry emojis to express your displeasure. You place the phone back in the drawer.", false),
-  "take weed"     => Kitties.new("Yass queen, now the morning is really coming together! Weed is great for a hangover. Sadly, there’s nothing in this room to smoke it with. You’re currently pants-less (no pockets) but you didn’t bother to taking off your sports bra last night so you stuff the baggie in there for safekeeping. Classy.", false, 
-    {}, 
-    [:weed])  
+  
+
+  "take weed" => Dozer.new("Yass queen, now the morning is really coming together! Weed is great for a hangover. Sadly, there’s nothing in this room to smoke it with. You’re currently pants-less (no pockets) but you didn’t bother to taking off your sports bra last night so you stuff the baggie in there for safekeeping. Classy.").
+  you_get(:weed).
+  only_once.build 
 }
 
 print_inventory = ->(inventory) do 
