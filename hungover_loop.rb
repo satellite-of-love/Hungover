@@ -19,9 +19,9 @@ print_inventory = ->(inventory) do
   end
   
 @leave_room =
-  Kitties.new("You slowly manuver yourself forward, offering a brief prayer to any booze-friendly deity that might take pity on your current state. \n ('Are you there, Bacchus? It's me, Margaret'). \n You slowly make your way to the door, open it, and lean against the frame while you contemplate your next move. \n Directly ahead is the living room, to your right is the kitchen.",
-:bedroom_doorway
-  ) 
+  Dozer.new("You slowly manuver yourself forward, offering a brief prayer to any booze-friendly deity that might take pity on your current state. \n ('Are you there, Bacchus? It's me, Margaret'). \n You slowly make your way to the door, open it, and lean against the frame while you contemplate your next move. \n Directly ahead is the living room, to your right is the kitchen.").
+travelling(:bedroom_doorway).build
+  
 
   @bedroom_doorway =
   {"go back" =>Kitties.new("You backtrack into the bedroom.", :bedroom),
@@ -29,28 +29,27 @@ print_inventory = ->(inventory) do
   }
   
 
-@starting_options = 
-{ "look around" => 
-  Kitties.new("You’re in your bedroom, sprawled on top of your comforter and pillows. There’s a poster up on the wall of the Star Trek captains and Picard seems to have a distinct look of disapproval on his face as he gazes down at your rather undignified state. Whatever, Jean-Luc, no need to be so snooty about it. \n Next to the bed is a table. On top of the table is a bottle of water. The table also has a drawer, currently closed. The door leading out of the bedroom is to your left.",
-              false,
-              {
-                
-              "take water" => 
+@starting_bedroom_options = 
+{ "look around" => Dozer.new("You’re in your bedroom, sprawled on top of your comforter and pillows. There’s a poster up on the wall of the Star Trek captains and Picard seems to have a distinct look of disapproval on his face as he gazes down at your rather undignified state. Whatever, Jean-Luc, no need to be so snooty about it. \n Next to the bed is a table. On top of the table is a bottle of water. The table also has a drawer, currently closed. The door leading out of the bedroom is to your left.").
+       add_options({"take water" => 
                 Dozer.new("You gulp down the water until the bottle is empty, and say a brief word of thanks to Drunk-you for so helpfully placing it there before passing out last night. Great job, Drunk-you!"
                 ).add_options({"stand up" => Kitties.new("Congratulations! You're vertical now. Good job buddy.", false, {"leave room" => @leave_room })}).
                 only_once.build,
-                
-                
-                
-                "open drawer" => Kitties.new("You open the bedside table drawer. Inside is your phone, your vibrator, and a small bag of weed. Nice.", false, @drawer_options)}),
+            "open drawer" => Dozer.new("You open the bedside table drawer. Inside is your phone, your vibrator, and a small bag of weed. Nice.").add_options(@drawer_options).build
+            }).build,
   "fuck it" => Kitties.new("crawl back into bed you loser", :quit),
   "inventory" => Kitties.new(print_inventory),
-  "stand up" => Kitties.new("Whoah there, cowgirl. Don't know if you're ready to be entirely vertical just yet.", false)
-
+  "stand up" => Kitties.new("Whoah there, cowgirl. Don't know if you're ready to be entirely vertical just yet.")
 }
 
+bedroom_doorway_options = { "lalalala" => Dozer.new("You made it!!").build,
+                            "got back" => Dozer.new("Turning around makes you dizzy").
+                                          travelling(:bedroom).build }
 
-
+@starting_options = 
+{ :bedroom => @starting_bedroom_options,
+  :bedroom_doorway => bedroom_doorway_options
+}
 
 def start
   puts "Your head is pounding and what feels like the light of ten thousand suns"
@@ -59,7 +58,7 @@ def start
   puts "Squinting, you manage to roll over on your bed, reaching out to tug the curtain across the window. Ahh, much better. The effort of moving leaves your head spinning and you collapse back on your pillow to reflect on your situation."
   puts ''
   puts "The night before had started as just a few drinks out with friends, but had"
-  puts "quickly professed to a somewhat rowdier evening."
+  puts "quickly progressed to a somewhat rowdier evening."
   puts ''
   puts "As you lay there in bed some of the details start trickling back..."
   puts ''
@@ -78,5 +77,5 @@ end
   
 start 
 
-Game.go(@starting_options)
+Game.go(@starting_options, :bedroom)
 

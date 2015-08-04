@@ -12,6 +12,13 @@ class Kitties
     @new_stuff = s
     @only_once = o
   end
+  def where_to_be (where_i_was_before)
+    if (travelling && travelling != :stay_here)
+      travelling
+    else
+      where_i_was_before
+    end
+  end
 end
 
 class Dozer
@@ -48,31 +55,35 @@ module Game
   def self.prompt
     print "==> "
   end
-  def self.modify_options(old_options, kitty, next_move)
+  def self.modify_options(old_room_options, kitty, next_move, room)
+    old_options = old_room_options[room]
     new_options = old_options.merge(kitty.moar)
     if kitty.only_once
       new_options.delete(next_move)   
     end
-    new_options
+   old_room_options.merge({room => new_options}) 
   end
-  def self.go(options, inventory = [] )
+  def self.go(room_options, room, inventory = [] )
     prompt
     next_move = gets.chomp.strip
-    kitty = options[next_move]
+    kitty = room_options[room][next_move]
 
     if kitty
       puts kitty.prints.call(inventory)
-      if kitty.travelling != :quit
-        go(modify_options(options, kitty, next_move), kitty.stuff(inventory))
+      new_room = kitty.where_to_be(room)
+      if new_room != :quit   
+        go(modify_options(room_options, kitty, next_move, room), 
+           new_room,
+           kitty.stuff(inventory))
       end
     else
       if next_move == "think"
         puts "what are some of my options?" 
-        puts options.keys.join(", ")
+        puts room_options[room].keys.join(", ")
       else
         puts "say what now"
       end
-      go(options, inventory)
+      go(room_options, room, inventory)
     end
   end
 end
