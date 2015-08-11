@@ -64,9 +64,10 @@ module Game
    old_room_options.merge({current_room => new_options}) 
   end
   def self.go(forever_options, room_options, current_room, inventory = [])
+    available_options = room_options[current_room].merge forever_options
     prompt
     next_move = gets.chomp.strip
-    kitty = room_options[current_room][next_move]
+    kitty = available_options[next_move]
 
     if kitty
       puts kitty.prints.call(inventory)
@@ -79,7 +80,7 @@ module Game
     else
       if next_move == "think"
         puts "what are some of my options?" 
-        puts room_options[current_room].keys.join(", ")
+        puts available_options.keys.join(", ")
       else
         puts "say what now"
       end
