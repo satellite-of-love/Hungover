@@ -1,6 +1,16 @@
 
 require './game.rb'
 
+print_inventory = ->(inventory) do 
+    if inventory.empty? then "you ain't got nothing" 
+    else "you have something:   " +inventory.join(", ") 
+    end
+  end
+
+forever_options = {
+      "fuck it" => Kitties.new("crawl back into bed you loser", :quit),
+      "inventory" => Kitties.new(print_inventory)
+    }
 
 @drawer_options = { 
   "take vibrator" => Kitties.new("Eh, you’re not really in the mood at the moment.", false),
@@ -12,11 +22,7 @@ require './game.rb'
   only_once.build 
 }
 
-print_inventory = ->(inventory) do 
-    if inventory.empty? then "you ain't got nothing" 
-    else "you have something:   " +inventory.join(", ") 
-    end
-  end
+
   
 @leave_room =
   Dozer.new("You slowly manuver yourself forward, offering a brief prayer to any booze-friendly deity that might take pity on your current state. \n ('Are you there, Bacchus? It's me, Margaret'). \n You slowly make your way to the door, open it, and lean against the frame while you contemplate your next move. \n Directly ahead is the living room, to your right is the kitchen.").
@@ -37,19 +43,26 @@ travelling(:bedroom_doorway).build
                 only_once.build,
             "open drawer" => Dozer.new("You open the bedside table drawer. Inside is your phone, your vibrator, and a small bag of weed. Nice.").add_options(@drawer_options).build
             }).build,
-  "fuck it" => Kitties.new("crawl back into bed you loser", :quit),
-  "inventory" => Kitties.new(print_inventory),
-  "stand up" => Kitties.new("Whoah there, cowgirl. Don't know if you're ready to be entirely vertical just yet.")
+            "stand up" => Kitties.new("Whoah there, cowgirl. Don't know if you're ready to be entirely vertical just yet.")
 }
 
-bedroom_doorway_options = { "lalalala" => Dozer.new("You made it!!").build,
-                            "got back" => Dozer.new("Turning around makes you dizzy").
-                                          travelling(:bedroom).build }
 
-@starting_options = 
-{ :bedroom => @starting_bedroom_options,
-  :bedroom_doorway => bedroom_doorway_options
+bedroom_doorway_options = { 
+  "go kitchen" => Dozer.new("You shuffle into the kitchen, feeling like every generic zombie you’ve ever seen on screen. You peek into the fridge. Apple juice! Mmm yes, drink that. Delicious. There’s also a few slices of leftover pizza. Maybe you’d feel better if you ate something?").
+  travelling(:kitchen).build, 
+  "go back" => Dozer.new("Turning around makes you dizzy"). 
+travelling(:bedroom).build
 }
+
+kitchen_options = {"eat pizza" =>
+Dozer.new("Oh no. Ohhhh no. Bad idea. You really should have done something about the nausea before attempting food. Now you’re prostate on the kitchen floor, willing your stomach to obey you. Your cat chooses this moment to come paw at your face like the little asshole he is. Eventually you’re able to stand again. Better not try that again until you've gotten your stomach under control").build} 
+
+@starting_options = {
+  :bedroom => @starting_bedroom_options,
+  :bedroom_doorway => bedroom_doorway_options,
+  :kitchen => kitchen_options
+}
+
 
 def start
   puts "Your head is pounding and what feels like the light of ten thousand suns"
@@ -77,5 +90,5 @@ end
   
 start 
 
-Game.go(@starting_options, :bedroom)
+Game.go(forever_options, @starting_options, :bedroom)
 

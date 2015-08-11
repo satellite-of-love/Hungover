@@ -55,35 +55,35 @@ module Game
   def self.prompt
     print "==> "
   end
-  def self.modify_options(old_room_options, kitty, next_move, room)
-    old_options = old_room_options[room]
+  def self.modify_options(old_room_options, kitty, next_move, current_room)
+    old_options = old_room_options[current_room]
     new_options = old_options.merge(kitty.moar)
     if kitty.only_once
       new_options.delete(next_move)   
     end
-   old_room_options.merge({room => new_options}) 
+   old_room_options.merge({current_room => new_options}) 
   end
-  def self.go(room_options, room, inventory = [] )
+  def self.go(forever_options, room_options, current_room, inventory = [])
     prompt
     next_move = gets.chomp.strip
-    kitty = room_options[room][next_move]
+    kitty = room_options[current_room][next_move]
 
     if kitty
       puts kitty.prints.call(inventory)
-      new_room = kitty.where_to_be(room)
+      new_room = kitty.where_to_be(current_room)
       if new_room != :quit   
-        go(modify_options(room_options, kitty, next_move, room), 
+        go(forever_options, modify_options(room_options, kitty, next_move, current_room), 
            new_room,
            kitty.stuff(inventory))
       end
     else
       if next_move == "think"
         puts "what are some of my options?" 
-        puts room_options[room].keys.join(", ")
+        puts room_options[current_room].keys.join(", ")
       else
         puts "say what now"
       end
-      go(room_options, room, inventory)
+      go(forever_options, room_options, current_room, inventory)
     end
   end
 end
