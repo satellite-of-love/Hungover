@@ -25,7 +25,7 @@ forever_options = {
 
   
 @leave_room =
-  Dozer.new("You slowly manuver yourself forward, offering a brief prayer to any booze-friendly deity that might take pity on your current state. \n ('Are you there, Bacchus? It's me, Margaret'). \n You slowly make your way to the door, open it, and lean against the frame while you contemplate your next move. \n Directly ahead is the living room, to your right is the kitchen.").
+  Dozer.new("You slowly manuver yourself forward, offering a brief prayer to any booze-friendly deity that might take pity on your current state. \n ('Are you there, Bacchus? It's me, Margaret'). \n You slowly make your way to the door, open it, and lean against the frame while you contemplate your next move. \n To your left is the living room, to your right is the kitchen.").
 travelling(:bedroom_doorway).build
   
 
@@ -46,16 +46,26 @@ travelling(:bedroom_doorway).build
             "stand up" => Kitties.new("Whoah there, cowgirl. Don't know if you're ready to be entirely vertical just yet.")
 }
 
+@table_options = {
+"take money" => Dozer.new("Well you don’t really have a use for the money at the moment. So, you choose to make it rain on top of your cat, who has so helpfully jumped up on the table to investigate it with you. The bills scatter around him. He looks unimpressed.").build,
+"take papers" => Dozer.new("There are only a few left, but that’s enough to get the job done!").
+you_get(:papers).
+only_once.build
+}
 
 bedroom_doorway_options = { 
   "go kitchen" => Dozer.new("You shuffle into the kitchen, feeling like every generic zombie you’ve ever seen on screen. You peek into the fridge. Apple juice! Mmm yes, drink that. Delicious. There’s also a few slices of leftover pizza. Maybe you’d feel better if you ate something?").
   travelling(:kitchen).build, 
   "go back" => Dozer.new("Turning around makes you dizzy"). 
-travelling(:bedroom).build
+travelling(:bedroom).build,
+"go living room" => Dozer.new("The living room is small and a little cluttered. The table has a few items scattered across it.").build,
+"look at table" => Dozer.new("Among all the usual table detritus of empty Solo cups and silverware you find some crumpled dollar bills, a few joint-rolling papers and we all say hallelujah.").add_options(@table_options).build
 }
 
 kitchen_options = {"eat pizza" =>
-Dozer.new("Oh no. Ohhhh no. Bad idea. You really should have done something about the nausea before attempting food. Now you’re prostate on the kitchen floor, willing your stomach to obey you. Your cat chooses this moment to come paw at your face like the little asshole he is. Eventually you’re able to stand again. Better not try that again until you've gotten your stomach under control").build} 
+Dozer.new("Oh no. Ohhhh no. Bad idea. You really should have done something about the nausea before attempting food. Now you’re prostate on the kitchen floor, willing your stomach to obey you. Your cat chooses this moment to come paw at your face like the little asshole he is. Eventually you’re able to stand again. Better not try that again until you've gotten your stomach under control").build,
+"go back" => Dozer.new("Oof, turning around makes you dizzy. You're by the bedroom doorway again. The kitchen is to your right. The living room is to your left, and the bedroom is behind you.").
+travelling(:bedroom_doorway).build}
 
 @starting_options = {
   :bedroom => @starting_bedroom_options,
