@@ -66,11 +66,11 @@ module Game
   end
 
   def self.modify_forever_options(old_ones, magic, inventory)
-    new_forever_options = old_ones
+    new_forever_options = old_ones.merge(magic.call(inventory))
     new_forever_options
   end
 
-  def self.go(forever_options, room_options, current_room, inventory = [], magic = nil)
+  def self.go(forever_options, room_options, current_room, inventory = [], magic = ->(inventory) { {} } )
     available_options = room_options[current_room].merge forever_options
     prompt
     next_move = gets.chomp.strip
