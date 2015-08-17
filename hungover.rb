@@ -12,6 +12,17 @@ forever_options = {
       "inventory" => Kitties.new(print_inventory)
     }
 
+magic = ->(inventory) do
+  puts "magic!"
+  if inventory.member?(:weed) && inventory.member?(:papers)
+    puts "MAGIC!"
+    {"roll joint" => Dozer.new("You take the weed and the papers out of your bra and roll a sloppy but passable joint. There’s a lighter nearby--you grab it and light up. Ahhhhhh yes, this joint is doing the Lord’s work. You feel better almost immediately and your stomach finally settles for the first time that morning").only_once.build
+    }
+  else 
+    {}
+  end
+end
+
 @drawer_options = {
   "take vibrator" => Kitties.new("Eh, you’re not really in the mood at the moment.", false),
   "take phone"    => Kitties.new("You pick up your phone. Ten Facebook notifications?! Okay, which one of your asshole friends thought it was okay to tag you in so many horribly unflattering pictures? You quickly untag yourself and send your friend a series of angry emojis to express your displeasure. You place the phone back in the drawer.", false),
@@ -48,7 +59,7 @@ travelling(:bedroom_doorway).build
 
 @table_options = {
 "take money" => Dozer.new("Well you don’t really have a use for the money at the moment. So, you choose to make it rain on top of your cat, who has so helpfully jumped up on the table to investigate it with you. The bills scatter around him. He looks unimpressed.").build,
-"take papers" => Dozer.new("There are only a few left, but that’s enough to get the job done!").
+"take papers" => Dozer.new("There are only a few left, but that’s enough to get the job done! You stuff them in your bra for safe-keeping").
 you_get(:papers).
 only_once.build
 }
@@ -106,5 +117,5 @@ end
 
 start
 
-Game.go(forever_options, @starting_options, :bedroom)
+Game.go(forever_options, @starting_options, :bedroom, [], magic)
 

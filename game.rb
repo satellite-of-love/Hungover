@@ -70,8 +70,9 @@ module Game
     new_forever_options
   end
 
-  def self.go(forever_options, room_options, current_room, inventory = [], magic = ->(inventory) { {} } )
-    available_options = room_options[current_room].merge forever_options
+  def self.go(old_forever_options, room_options, current_room, inventory = [], magic = ->(inventory) { {} } )
+    new_forever_options = modify_forever_options(old_forever_options, magic, inventory)
+    available_options = room_options[current_room].merge new_forever_options
     prompt
     next_move = gets.chomp.strip
     kitty = available_options[next_move]
@@ -80,7 +81,7 @@ module Game
       puts kitty.prints.call(inventory)
       new_room = kitty.where_to_be(current_room)
       if new_room != :quit
-        go(modify_forever_options(forever_options, magic, inventory),
+        go(new_forever_options,
            modify_options(room_options, kitty, next_move, current_room),
            new_room,
            kitty.stuff(inventory), magic)
@@ -92,7 +93,7 @@ module Game
       else
         puts "say what now"
       end
-      go(forever_options, room_options, current_room, inventory, magic)
+      go(new_forever_options, room_options, current_room, inventory, magic)
     end
   end
 end
