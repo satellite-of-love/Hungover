@@ -20,6 +20,12 @@ class Kitties
       where_i_was_before
     end
   end
+  def narrow_options (options, next_move)
+    if @only_once
+      options.delete(next_move)
+    end
+    options
+  end
 end
 
 class Dozer
@@ -75,6 +81,7 @@ module Game
     new_forever_options = old_ones.merge(magic.call(inventory))
     new_forever_options
   end
+  
 
   def self.go(old_forever_options, room_options, current_room, inventory = [], magic = ->(inventory) { {} } )
     new_forever_options = modify_forever_options(old_forever_options, magic, inventory)
@@ -87,7 +94,7 @@ module Game
       puts kitty.prints.call(inventory)
       new_room = kitty.where_to_be(current_room)
       if new_room != :quit
-        go(new_forever_options,
+        go(kitty.narrow_options(new_forever_options, next_move),
            modify_options(room_options, kitty, next_move, current_room),
            new_room,
            kitty.stuff(inventory), magic)

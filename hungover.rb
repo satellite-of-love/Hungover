@@ -14,7 +14,8 @@ forever_options = {
 
 magic = ->(inventory) do
   if inventory.member?(:weed) && inventory.member?(:papers)
-    {"roll joint" => Dozer.new("You take the weed and the papers out of your bra and roll a sloppy but passable joint. There’s a lighter nearby--you grab it and light up. Ahhhhhh yes, this joint is doing the Lord’s work. You feel better almost immediately and your stomach finally settles for the first time that morning").take_out([:weed, :papers]).only_once.build
+    {"roll joint" => Dozer.new("You take the weed and the papers out of your bra and roll a sloppy but passable joint. There’s a lighter nearby--you grab it and light up. Ahhhhhh yes, this joint is doing the Lord’s work. You feel better almost immediately and your stomach finally settles for the first time that morning").you_get(:good_vibes)
+      .take_out([:weed, :papers]).only_once.build
     }
   else 
     {}
@@ -75,9 +76,16 @@ living_room_options =  {
     "look at table" => Dozer.new("Among all the usual table detritus of empty Solo cups and silverware you find some crumpled dollar bills, a few joint-rolling papers and we all say hallelujah.").add_options(@table_options).build,
     "go back" => Dozer.new("Walking backward makes you only a little dizzy.").travelling(:bedroom_doorway).build}
 
+print_pizza = ->(inventory) do
+  if inventory.member?(:good_vibes)
+    "you are stoned you eat the pizza and you are happy and less hungover now"
+  else
+    "Oh no. Ohhhh no. Bad idea. You really should have done something about the nausea before attempting food. Now you’re prostate on the kitchen floor, willing your stomach to obey you. Your cat chooses this moment to come paw at your face like the little asshole he is. Eventually you’re able to stand again. Better not try that again until you've gotten your stomach under control"
+  end 
+end
 
 kitchen_options = {"eat pizza" =>
-Dozer.new("Oh no. Ohhhh no. Bad idea. You really should have done something about the nausea before attempting food. Now you’re prostate on the kitchen floor, willing your stomach to obey you. Your cat chooses this moment to come paw at your face like the little asshole he is. Eventually you’re able to stand again. Better not try that again until you've gotten your stomach under control").build,
+Dozer.new(print_pizza).build,
 "go back" => Dozer.new("Oof, turning around makes you dizzy. You're by the bedroom doorway again. The kitchen is to your right. The living room is to your left, and the bedroom is behind you.").
 travelling(:bedroom_doorway).build}
 
