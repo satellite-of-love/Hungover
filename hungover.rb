@@ -13,10 +13,8 @@ forever_options = {
     }
 
 magic = ->(inventory) do
-  puts "magic!"
   if inventory.member?(:weed) && inventory.member?(:papers)
-    puts "MAGIC!"
-    {"roll joint" => Dozer.new("You take the weed and the papers out of your bra and roll a sloppy but passable joint. There’s a lighter nearby--you grab it and light up. Ahhhhhh yes, this joint is doing the Lord’s work. You feel better almost immediately and your stomach finally settles for the first time that morning").only_once.build
+    {"roll joint" => Dozer.new("You take the weed and the papers out of your bra and roll a sloppy but passable joint. There’s a lighter nearby--you grab it and light up. Ahhhhhh yes, this joint is doing the Lord’s work. You feel better almost immediately and your stomach finally settles for the first time that morning").take_out([:weed, :papers]).only_once.build
     }
   else 
     {}

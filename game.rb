@@ -3,14 +3,15 @@
 class Kitties
   attr_reader :prints, :travelling, :moar, :new_stuff, :only_once
   def stuff(inventory)
-    inventory + @new_stuff
+    inventory + @new_stuff - @take_out
   end
-  def initialize (p, e = false, m = {}, s = [], o = false)
+  def initialize (p, e = false, m = {}, s = [], o = false, t = [])
     @prints = if p.is_a? String then ->(inventory) {p} else p end
     @travelling = e
     @moar = m
     @new_stuff = s
     @only_once = o
+    @take_out = t
   end
   def where_to_be (where_i_was_before)
     if (travelling && travelling != :stay_here)
@@ -28,6 +29,7 @@ class Dozer
     @moar = {}
     @new_stuff = []
     @only_once = false
+    @take_out = []
   end
   def add_options (m)
     @moar = m
@@ -42,10 +44,14 @@ class Dozer
     self
   end
   def build
-    Kitties.new(@prints, @travelling, @moar, @new_stuff, @only_once)
+    Kitties.new(@prints, @travelling, @moar, @new_stuff, @only_once, @take_out)
   end
   def you_get (n)
     @new_stuff = [n]
+    self
+  end
+  def take_out (t)
+    @take_out = t
     self
   end
 end
